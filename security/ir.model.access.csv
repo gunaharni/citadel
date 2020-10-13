@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_citadel_courses,access.citadel.courses,model_citadel_courses,,1,1,1,1
+access_citadel_sessions,access.citadel.sessions,model_citadel_sessions,,1,1,1,1
