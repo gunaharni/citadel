@@ -6,9 +6,10 @@
             <field name="arch" type="xml">
                 <tree string ="Courses">
                     <field name="name"/>
-                    <field name="mail"/>
-                    <field name="phone"/>
-                     <field name="sessions"/>
+                    <field name="instructor"/>
+                    <field name="level"/>
+                    <field name="description"/>
+                    <field name="session_count"/>
                 </tree>
             </field>
     </record>
@@ -18,25 +19,31 @@
             <field name="arch" type="xml">
                     <form string ="Attendees">
                         <sheet>
-                            <field name="image" widget="image" class="oe_avatar"/>
-                            <div class="oe_title">
                                 <group>
                                     <field name="name"/>
-                                    <field name="mail"/>
-                                    <field name="phone"/>
+                                    <field name="instructor"/>
+                                    <field name="level"/>
+                                    <field name="description"/>
+                                    <field name="session_count"/>
                                 </group>
-                            </div>
-                            <group>
-                                <group>
-                                     <field name="sessions"/>
-                                </group>
-                            </group>
+                            <notebook>
+                            <page string="Sessions">
+                                <field name="session_ids">
+                                    <tree>
+                                        <field name="instructor"/>
+                                        <field name="duration"/>
+                                        <field name="state"/>
+                                        <field name="attendee_count"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            </notebook>
                         </sheet>
                     </form>
             </field>
     </record>
     <record id="action_courses" model="ir.actions.act_window">
-    <field name="name">Attendees</field>
+    <field name="name">Courses</field>
     <field name="type">ir.actions.act_window</field>
          <field name="res_model">citadel.courses</field>
             <field name="view_mode">tree,form</field>
@@ -48,59 +55,4 @@
                 </p>
             </field>
     </record>
-     <record id="sessions_tree_view" model='ir.ui.view'>
-            <field name="name">citadel.sessions.tree</field>
-            <field name="model">citadel.sessions</field>
-            <field name="arch" type="xml">
-                <tree string ="Sessions">
-                    <field name="session1"/>
-                    <field name="level"/>
-                    <field name="time2"/>
-                    <field name="maester"/>
-                </tree>
-            </field>
-    </record>
-     <record id="sessions_form_view" model='ir.ui.view'>
-            <field name="name">citadel.sessions.form</field>
-            <field name="model">citadel.sessions</field>
-            <field name="arch" type="xml">
-                    <form string ="Sessions">
-                        <sheet>
-                            <group>
-                                <group>
-                                    <field name="session1"/>
-                                    <field name="level"/>
-                                    <field name="time2"/>
-                                    <field name="maester"/>
-                                </group>
-                            </group>
-                        </sheet>
-                    </form>
-            </field>
-    </record>
-    <record id="action_sessions" model="ir.actions.act_window">
-    <field name="name">Sessions</field>
-    <field name="type">ir.actions.act_window</field>
-         <field name="res_model">citadel.sessions</field>
-            <field name="view_mode">tree,form</field>
-            <field name="context">{}</field>
-            <field name="domain">[]</field>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Create your Sessions record Here!
-                </p>
-            </field>
-    </record>
-    <menuitem id="citadel_root_menu"
-              name="Citadel"
-              web_icon="event,static/description/icon.png"
-              sequence="1"/>
-    <menuitem id="citadel_courses_menu"
-              name="Attendees" action="action_courses"
-              parent="citadel_root_menu"
-              sequence = "1"/>
-    <menuitem id="citadel_sessions_menu"
-              name="Sessions" action="action_sessions"
-              parent="citadel_root_menu"
-              sequence = "2"/>
 </odoo>

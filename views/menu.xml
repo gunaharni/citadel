@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="citadel_root_menu"
+              name="Citadel"
+              web_icon="event,static/description/icon.png"
+              sequence="1"/>
+    <menuitem id="citadel_courses_menu"
+              name="Courses" action="action_courses"
+              parent="citadel_root_menu"
+              sequence = "1"/>
+    <menuitem id="citadel_sessions_menu"
+              name="Sessions" action="citadel.session_list"
+              parent="citadel_root_menu"
+              sequence = "2"/>
+</odoo>

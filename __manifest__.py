@@ -10,7 +10,10 @@
     'depends': ['base', 'mail'],
     'data': [
         'security/ir.model.access.csv',
-        'views/course.xml'
+        'views/course.xml',
+        'views/session.xml',
+        'views/menu.xml',
+        'wizards/add_attendees.xml'
     ],
     'demo': [],
     'qweb': [],

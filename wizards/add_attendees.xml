@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_add_attendees" model='ir.ui.view'>
+        <field name="name">wizard.form</field>
+        <field name="model">citadel.add_attendees</field>
+        <field name="arch" type="xml">
+            <form string="Add Attendees">
+                <group>
+                    <field name="session_id"/>
+                    <field name="attendee_ids"/>
+                </group>
+                <footer>
+                    <button name="subscribe" type="object"
+                            string="Subscribe" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+ <act_window id="launch_session_wizard"
+             name="Add Attendees"
+             binding_model="citadel.sessions"
+             res_model="citadel.add_attendees"
+             view_mode="form"
+             target="new"/>
+</odoo>

@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="session_view_list">
+            <field name="name">Session List</field>
+            <field name="model">citadel.sessions</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Session List">
+                    <field name="name"/>
+                    <field name="course_name"/>
+                    <field name="instructor"/>
+                    <field name="duration"/>
+                    <field name="state"/>
+                    <field name="attendee_count"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="session_view_form" model="ir.ui.view">
+            <field name="name">citadel.sessions.view.form</field>
+            <field name="model">citadel.sessions</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+
+                        <button string="Confirm"
+                                type="object"
+                                name="action_confirm"
+                                attrs="{'invisible': [('state', 'in', ['confirmed', 'done'])]}"
+                                confirm="Are you sure?"
+                                class="oe_highlight"/>
+                        <button string="Return to Draft"
+                                type="object"
+                                name="action_draft"
+                                attrs="{'invisible': [('state', 'in', ['draft', 'done'])]}"
+                                confirm="Are you sure?"/>
+                        <button string="Mark as Done"
+                                type="object"
+                                name="action_done"
+                                attrs="{'invisible': [('state', 'in', ['draft', 'done'])]}"
+                                confirm="Are you sure?"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="course_id"/>
+                            <field name="instructor"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="duration"/>
+                        </group>
+                        <notebook>
+                            <page string="Attendees">
+                                <field name="attendee_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="session_view_calendar" model="ir.ui.view">
+            <field name="name">citadel.sessions.view.calendar</field>
+            <field name="model">citadel.sessions</field>
+            <field name="arch" type="xml">
+                <calendar string="Calendar Description" date_start="start_date" mode="week">
+                    <field name="course_name"/>
+                    <field name="instructor"/>
+                    <field name="attendee_count"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="session_search_view">
+            <field name="name">Session Search</field>
+            <field name="model">citadel.sessions</field>
+            <field name="arch" type="xml">
+                <search string="Session List">
+                    <field name="course_name"/>
+                    <field name="instructor"/>
+                    <field name="state"/>
+                    
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="session_list">
+            <field name="name">Sessions</field>
+            <field name="res_model">citadel.sessions</field>
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+
+    </data>
+</odoo>

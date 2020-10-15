@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class Courses(models.Model):
@@ -6,22 +6,27 @@ class Courses(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "course table"
 
-    name=fields.Char(string='Name:', required=True)
-    time1 = fields.Char(string='time')
-    mail= fields.Char(string='Mail-id:', required=True)
-    phone = fields.Char(string='Phone no:', size=10, required=True)
-    sessions = fields.Many2many('citadel.sessions',
-                                  'sessions_time_rel',
-                                  'sessions_id',
-                                  'time_id', string='Select Session', required=True)
-    image = fields.Binary(string='image')
+    name = fields.Char(string='Name', required=True)
+    level = fields.Selection(
+        string='Difficulty',
+        selection=[
+            ('easy', 'Easy'),
+            ('medium', 'Medium'),
+            ('hard', 'Hard'),
+        ],
+        default='medium')
+    instructor = fields.Many2one(string='Instructor', comodel_name='res.partner', requried=True)
+    description = fields.Text(string='Description')
+    session_ids = fields.One2many(comodel_name='citadel.sessions', inverse_name='course_id')
+    session_count = fields.Integer(string='No. of Sessions', compute='_compute_session_count', store=True)
 
-class Sessions(models.Model):
-    _name = "citadel.sessions"
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = "session table"
+    @api.depends('session_ids')
+    def _compute_session_count(self):
+        for record in self:
+            record.session_count = len(record.session_ids)
 
-    session1 = fields.Char(string='Session')
-    level = fields.Selection([('beginner','Beginner'),('intermediate','Intermediate'),('expert','Expert')],string='Level')
-    time2 = fields.Char(string='Time')
-    maester = fields.Char(string='Maester name:')
+    @api.onchange('level')
+    def change_description(self):
+        for record in self:
+            if record.level == 'hard':
+                record.description = '[Hard] ' + str(record.description)
