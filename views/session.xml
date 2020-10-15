@@ -84,7 +84,7 @@
                     <field name="course_name"/>
                     <field name="instructor"/>
                     <field name="state"/>
-                    
+
                 </search>
             </field>
         </record>
